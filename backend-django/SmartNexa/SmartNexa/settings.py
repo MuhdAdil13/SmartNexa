@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'SmartNexa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'db_smartnexa',
+        'NAME':'smartnexa',
         'USER':'user_smartnexa',
         'PASSWORD':'smartnexa',
         'HOST':'localhost',
