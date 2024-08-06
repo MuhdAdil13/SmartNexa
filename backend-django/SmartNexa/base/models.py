@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 
-class customer(models.Model):
+class Customer(models.Model):
     customer_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -43,7 +43,7 @@ class inventory(models.Model):
 
 class cart(models.Model):
     product_id = models.ForeignKey(products,on_delete=models.CASCADE)
-    customer_id = models.ForeignKey(customer,on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
     product_quantity = models.IntegerField()
 
     class Meta:
@@ -61,7 +61,7 @@ class transaction(models.Model):
 
 class order(models.Model):
     order_id = models.AutoField(primary_key=True)
-    customer_id = models.ForeignKey(customer,on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(Customer,on_delete=models.CASCADE)
     order_date = models.DateTimeField()
     order_status = models.CharField(max_length=10)
     transaction_id = models.ForeignKey(transaction,on_delete=models.CASCADE)
