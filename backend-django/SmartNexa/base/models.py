@@ -5,7 +5,7 @@ from django.db import models
 
 
 class customer(models.Model):
-    cust_id = models.AutoField(primary_key=True)
+    customer_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     gender = models.CharField(max_length=1)
