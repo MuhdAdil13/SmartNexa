@@ -3,27 +3,27 @@ from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import transaction
-from .serializers import TransactionSerializer
+from ..models import Inventory
+from ..serializers import InventorySerializer
 
 
-class TransactionViewSet(viewsets.ModelViewSet):
-    queryset = transaction.objects.all()
-    serializer_class = TransactionSerializer
+class InventoryViewSet(viewsets.ModelViewSet):
+    queryset = Inventory.objects.all()
+    serializer_class = InventorySerializer
 
 
 @api_view(['GET', 'POST'])
-def transaction_list(request):
+def inventory_list(request):
     """
-    List all transaction details, or add details.
+    List all inventory details, or add details.
     """
     if request.method == 'GET':
-        transactions_data = transaction.objects.all()
-        serializer = TransactionSerializer(transactions_data, many=True)
+        inventory_data = Inventory.objects.all()
+        serializer = InventorySerializer(inventory_data, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = TransactionSerializer(data=request.data)
+        serializer = InventorySerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -31,26 +31,26 @@ def transaction_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def transaction_detail(request, pk):
+def inventory_detail(request, pk):
     """
     Retrieve, update or delete a product instance.
     """
     try:
-        transaction_data = transaction.objects.get(pk=pk)
-    except transaction.DoesNotExist:
+        inventory_data = Inventory.objects.get(pk=pk)
+    except Inventory.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = TransactionSerializer(transaction_data)
+        serializer = InventorySerializer(inventory_data)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = TransactionSerializer(transaction_data, data=request.data)
+        serializer = InventorySerializer(inventory_data, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        transaction_data.delete()
+        inventory_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

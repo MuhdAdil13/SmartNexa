@@ -3,11 +3,11 @@ from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import admin
-from .serializers import AdminSerializer
+from ..models import Admin
+from ..serializers import AdminSerializer
 
 class AdminViewSet(viewsets.ModelViewSet):
-    queryset=admin.objects.all()    
+    queryset=Admin.objects.all()    
     serializer_class = AdminSerializer
 
 @api_view(['GET','POST'])
@@ -16,7 +16,7 @@ def admin_list(request):
       List all admins, or create new admin
     """
     if request.method == "GET":
-        admins_data = admin.objects.all()
+        admins_data = Admin.objects.all()
         serializer=AdminSerializer(admins_data, many=True)
     
     elif request.method == "POST":
@@ -32,8 +32,8 @@ def admin_detail(request, pk):
     Retrieve, update or delete a customer instance.
     """
     try:
-        admin_data = admin.objects.get(pk=pk)
-    except admin.DoesNotExist:
+        admin_data = Admin.objects.get(pk=pk)
+    except Admin.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':

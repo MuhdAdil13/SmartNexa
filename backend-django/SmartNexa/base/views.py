@@ -5,4 +5,4 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Customer
 from .serializers import CustomerSerializer
-from .views.customer import *
+from .apiViews import *

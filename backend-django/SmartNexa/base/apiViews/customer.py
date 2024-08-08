@@ -3,27 +3,30 @@ from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import cart
-from .serializers import CartSerializer
+from ..models import Customer
+from ..serializers import CustomerSerializer
 
 
-class CartViewSet(viewsets.ModelViewSet):
-    queryset = cart.objects.all()
-    serializer_class = CartSerializer
+class CustomerViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows customers to be viewed or edited.
+    """
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
 
 
 @api_view(['GET', 'POST'])
-def cart_list(request):
+def customer_list(request):
     """
-    List all cart_details, or add cart details.
+    List all customers, or create a new customer.
     """
     if request.method == 'GET':
-        cart_data = cart.objects.all()
-        serializer = CartSerializer(cart_data, many=True)
+        customers_data = Customer.objects.all()
+        serializer = CustomerSerializer(customers_data, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = CartSerializer(data=request.data)
+        serializer = CustomerSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -31,26 +34,26 @@ def cart_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def cart_detail(request, pk):
+def customer_detail(request, pk):
     """
-    Retrieve, update or delete a cart details instance.
+    Retrieve, update or delete a customer instance.
     """
     try:
-        cart_data = cart.objects.get(pk=pk)
-    except cart.DoesNotExist:
+        customer_data = Customer.objects.get(pk=pk)
+    except Customer.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = CartSerializer(cart_data)
+        serializer = CustomerSerializer(customer_data)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = CartSerializer(cart_data, data=request.data)
+        serializer = CustomerSerializer(customer_data, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        cart_data.delete()
+        customer_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

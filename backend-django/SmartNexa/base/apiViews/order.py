@@ -3,30 +3,27 @@ from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Customer
-from .serializers import CustomerSerializer
+from ..models import Order
+from ..serializers import OrderSerializer
 
 
-class CustomerViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows customers to be viewed or edited.
-    """
-    queryset = Customer.objects.all()
-    serializer_class = CustomerSerializer
+class OrderViewSet(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
 
 
 @api_view(['GET', 'POST'])
-def customer_list(request):
+def order_list(request):
     """
-    List all customers, or create a new customer.
+    List all order details, or add details.
     """
     if request.method == 'GET':
-        customers_data = Customer.objects.all()
-        serializer = CustomerSerializer(customers_data, many=True)
+        orders_data = Order.objects.all()
+        serializer = OrderSerializer(orders_data, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = CustomerSerializer(data=request.data)
+        serializer = OrderSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -34,26 +31,26 @@ def customer_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def customer_detail(request, pk):
+def order_detail(request, pk):
     """
-    Retrieve, update or delete a customer instance.
+    Retrieve, update or delete a order instance.
     """
     try:
-        customer_data = Customer.objects.get(pk=pk)
-    except Customer.DoesNotExist:
+        order_data = Order.objects.get(pk=pk)
+    except Order.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = CustomerSerializer(customer_data)
+        serializer = OrderSerializer(order_data)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = CustomerSerializer(customer_data, data=request.data)
+        serializer = OrderSerializer(order_data, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        customer_data.delete()
+        order_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

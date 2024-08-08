@@ -3,26 +3,27 @@ from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import seller
-from .serializers import SellerSerializer
+from ..models import OrderDetails
+from ..serializers import OrDetailSerializer
 
 
-class SellerViewSet(viewsets.ModelViewSet):
-    queryset = seller.objects.all()
-    serializer_class = SellerSerializer
+class OrderDetailsViewSet(viewsets.ModelViewSet):
+    queryset = OrderDetails.objects.all()
+    serializer_class = OrDetailSerializer
 
 
 @api_view(['GET', 'POST'])
-def seller_list(request):
+def order_details_list(request):
     """
-      List all sellers, or create new seller
+    List all order_details details, or add order_details.
     """
-    if request.method == "GET":
-        sellers_data = seller.objects.all()
-        serializer = SellerSerializer(sellers_data, many=True)
+    if request.method == 'GET':
+        order_details_data = OrderDetails.objects.all()
+        serializer = OrDetailSerializer(order_details_data, many=True)
+        return Response(serializer.data)
 
-    elif request.method == "POST":
-        serializer = SellerSerializer(data=request.data)
+    elif request.method == 'POST':
+        serializer = OrDetailSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -30,26 +31,26 @@ def seller_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def seller_detail(request, pk):
+def order_info_detail(request, pk):
     """
-    Retrieve, update or delete a customer instance.
+    Retrieve, update or delete a order_details instance.
     """
     try:
-        seller_data = seller.objects.get(pk=pk)
-    except seller.DoesNotExist:
+        order_detail_data = OrderDetails.objects.get(pk=pk)
+    except OrderDetails.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = SellerSerializer(seller_data)
+        serializer = OrDetailSerializer(order_detail_data)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = SellerSerializer(seller_data, data=request.data)
+        serializer = OrDetailSerializer(order_detail_data, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        seller_data.delete()
+        order_detail_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)

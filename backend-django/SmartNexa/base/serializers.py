@@ -10,47 +10,47 @@ class CustomerSerializer(serializers.ModelSerializer):
 
 class AdminSerializer(serializers.ModelSerializer):
     class Meta:
-        model = admin
-        fields = '_all_'
+        model = Admin
+        fields = ['admin_id','first_name','last_name','role','employee_id']
 
 
 class SellerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = seller
+        model = Seller
         fields = '__all__'
 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
-        model = products
+        model = Products
         fields = '__all__'
 
 
 class InventorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = inventory
+        model = Inventory
         fields = '__all__'
 
 
 class CartSerializer(serializers.ModelSerializer):
     class Meta:
-        model = cart
+        model = Cart
         fields = '__all__'
 
 
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = transaction
+        model = Transaction
         fields = '__all__'
 
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = order
+        model = Order
         fields = '__all__'
 
 
 class OrDetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = order_details
+        model = OrderDetails
         fields = '__all__'

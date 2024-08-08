@@ -3,27 +3,27 @@ from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import order_details
-from .serializers import OrDetailSerializer
+from ..models import Products
+from ..serializers import ProductSerializer
 
 
-class OrderViewSet(viewsets.ModelViewSet):
-    queryset = order_details.objects.all()
-    serializer_class = OrDetailSerializer
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Products.objects.all()
+    serializer_class = ProductSerializer
 
 
 @api_view(['GET', 'POST'])
-def order_details_list(request):
+def product_list(request):
     """
-    List all order_details details, or add order_details.
+    List all products, or add a product.
     """
     if request.method == 'GET':
-        order_details_data = order_details.objects.all()
-        serializer = OrDetailSerializer(order_details_data, many=True)
+        products_data = Products.objects.all()
+        serializer = ProductSerializer(products_data, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        serializer = OrDetailSerializer(data=request.data)
+        serializer = ProductSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -31,26 +31,26 @@ def order_details_list(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-def order_info_detail(request, pk):
+def product_detail(request, pk):
     """
-    Retrieve, update or delete a order_details instance.
+    Retrieve, update or delete a product instance.
     """
     try:
-        order_detail_data = order_details.objects.get(pk=pk)
-    except order_details.DoesNotExist:
+        product_data = Products.objects.get(pk=pk)
+    except Products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = OrDetailSerializer(order_detail_data)
+        serializer = ProductSerializer(product_data)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = OrDetailSerializer(order_detail_data, data=request.data)
+        serializer = ProductSerializer(product_data, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
-        order_detail_data.delete()
+        product_data.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
