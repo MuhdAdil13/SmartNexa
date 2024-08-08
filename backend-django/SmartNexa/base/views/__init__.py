@@ -6,4 +6,4 @@ from .inventory import inventory_list, inventory_detail
 from .cart import cart_list, cart_detail
 from .transaction import transaction_list, transaction_detail
 from .order import order_list, order_detail
-from .order_details import order_detail_list, order_info_detail
+from .order_details import order_details_list, order_info_detail

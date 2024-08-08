@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -8,8 +8,9 @@ from .serializers import ProductSerializer
 
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = product.objects.all()
+    queryset = products.objects.all()
     serializer_class = ProductSerializer
+
 
 @api_view(['GET', 'POST'])
 def product_list(request):
@@ -28,6 +29,7 @@ def product_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def product_detail(request, pk):
     """
@@ -35,7 +37,7 @@ def product_detail(request, pk):
     """
     try:
         product_data = products.objects.get(pk=pk)
-    except Customer.DoesNotExist:
+    except products.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':

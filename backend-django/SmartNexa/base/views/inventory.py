@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.http import HttpResponse as HR
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -10,6 +10,7 @@ from .serializers import InventorySerializer
 class InventoryViewSet(viewsets.ModelViewSet):
     queryset = inventory.objects.all()
     serializer_class = InventorySerializer
+
 
 @api_view(['GET', 'POST'])
 def inventory_list(request):
@@ -28,6 +29,7 @@ def inventory_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def inventory_detail(request, pk):
     """
@@ -39,11 +41,11 @@ def inventory_detail(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'GET':
-        serializer = InventorySerializer(product_data)
+        serializer = InventorySerializer(inventory_data)
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = ProductSerializer(inventory_data, data=request.data)
+        serializer = InventorySerializer(inventory_data, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
