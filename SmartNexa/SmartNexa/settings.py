@@ -18,7 +18,7 @@ from datetime import timedelta
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-AUTH_USER_MODEL = 'api.SmartNexaUser'
+AUTH_USER_MODEL = 'sn_user.SmartNexaUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':('rest_framework_simplejwt.authentication.JWTAuthentication',),
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'api',
+    'sn_user',
     'rest_framework'
 ]
 
