@@ -23,6 +23,7 @@ class SmartNexaUser(AbstractBaseUser):
     email = models.EmailField(unique=True)  # Ensure email is unique
     mobile = models.CharField(max_length=15, blank=True, null=True)  # Optional mobile field
     is_active = models.BooleanField(default=True)
+    user_type = models.CharField(max_length=20)
     is_superuser = models.BooleanField(default=False)
     objects = SmartNexaUserManager()
     USERNAME_FIELD = 'username'
