@@ -16,8 +16,6 @@ class SmartNexaUserManager(BaseUserManager):
         return self.create_user(email,password,**extra_fields)
 
 
-
-
 class SmartNexaUser(AbstractBaseUser):
     username = models.CharField(max_length=100, unique=True)
     firstname = models.CharField(max_length=30)
