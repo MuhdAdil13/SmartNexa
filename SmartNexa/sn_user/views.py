@@ -32,6 +32,7 @@ class LoginView(APIView):
             refresh = RefreshToken.for_user(user)
             return Response({
                 'refresh' : str(refresh),
-                'access' : str(refresh.access_token)
+                'access' : str(refresh.access_token),
+                'type' : str(user.user_type)
             })
         return Response({'error' : 'Invalid Credentials'},status=status.HTTP_401_UNAUTHORISED)
