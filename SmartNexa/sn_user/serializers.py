@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
-
+from rest_framework_simplejwt.tokens import RefreshToken
 
 User=get_user_model()
 
@@ -25,3 +25,12 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['username','email', 'firstname', 'lastname','mobile']
+
+class JWTTokenSerializer(serializers.Serializer):
+    token = serializers.CharField()
+
+    def get_token(self, user):
+        return {
+            'refresh': str(RefreshToken.for_user(user)),
+            'access': str(RefreshToken.for_user(user).access_token),
+        }
