@@ -53,10 +53,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sn_user',
-<<<<<<< HEAD
     'seller',
-=======
->>>>>>> feature/user/login
+    'sn_admin',
     'rest_framework'
 ]
 

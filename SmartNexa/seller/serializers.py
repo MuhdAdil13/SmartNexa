@@ -20,6 +20,7 @@ class SellerRegisterSerializer(serializers.ModelSerializer):
 
         # Create the SmartNexaUser instance
         user = SmartNexaUser(
+            username=validated_data['username'],
             email=validated_data['email'],
             firstname=validated_data['firstname'],
             lastname=validated_data['lastname'],
