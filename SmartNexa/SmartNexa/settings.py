@@ -21,12 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = 'sn_user.SmartNexaUser'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':('rest_framework_simplejwt.authentication.JWTAuthentication',),
-    'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.IsAuthenticated',)
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
 }
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME':timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME':timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     # 'AUTH_HEADER_TYPE':('Bearer',)
 }
 
@@ -52,12 +52,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
     'sn_user',
-<<<<<<< HEAD
     'seller',
-=======
->>>>>>> feature/user/login
-    'rest_framework'
+    'sn_admin',
 ]
 
 MIDDLEWARE = [
@@ -68,6 +67,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
 ]
 
 ROOT_URLCONF = 'SmartNexa.urls'
@@ -97,11 +101,11 @@ WSGI_APPLICATION = 'SmartNexa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'smartnexa',
-        'USER':'user_smartnexa',
-        'PASSWORD':'smartnexa',
-        'HOST':'localhost',
-        'PORT':'3306'
+        'NAME': 'smartnexa',
+        'USER': 'user_smartnexa',
+        'PASSWORD': 'smartnexa',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
