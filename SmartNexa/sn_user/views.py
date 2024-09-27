@@ -27,7 +27,7 @@ class LoginView(APIView):
         username = request.data.get('username')
         password  = request.data.get('password')
         user = authenticate(username = username , password = password)
-        print(vars(user))
+        print(username)
         if user is not None:
             refresh = RefreshToken.for_user(user)
             return Response({
@@ -35,4 +35,4 @@ class LoginView(APIView):
                 'access' : str(refresh.access_token),
                 'type' : str(user.user_type)
             })
-        return Response({'error' : 'Invalid Credentials'},status=status.HTTP_401_UNAUTHORISED)
+        return Response({'error' : 'Invalid Credentials'},status=status.HTTP_401_UNAUTHORIZED)
