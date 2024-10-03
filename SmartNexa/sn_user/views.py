@@ -36,3 +36,4 @@ class LoginView(APIView):
                 'type' : str(user.user_type)
             })
         return Response({'error' : 'Invalid Credentials'},status=status.HTTP_401_UNAUTHORIZED)
+    
