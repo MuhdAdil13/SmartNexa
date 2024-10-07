@@ -37,3 +37,8 @@ class LoginView(APIView):
             })
         return Response({'error' : 'Invalid Credentials'},status=status.HTTP_401_UNAUTHORIZED)
     
+class LoginVerify(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self,request):
+        return Response({'message' : 'success'},status=status.HTTP_200_OK)
