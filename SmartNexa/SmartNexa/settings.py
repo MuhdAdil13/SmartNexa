@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,6 +31,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME':timedelta(days=1),
     # 'AUTH_HEADER_TYPE':('Bearer',)
 }
+
+# MEDIA SETTINGS
+MEDIA_URL = '/media/'  # This is the public URL for accessing media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # This is the directory where media files will be stored
 
 
 # Quick-start development settings - unsuitable for production
@@ -58,6 +64,7 @@ INSTALLED_APPS = [
     'seller',
     'sn_admin',
     'customer',
+    'products'
 ]
 
 MIDDLEWARE = [
