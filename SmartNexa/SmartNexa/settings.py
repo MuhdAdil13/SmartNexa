@@ -15,7 +15,6 @@ from datetime import timedelta
 import os
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,18 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = 'sn_user.SmartNexaUser'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':('rest_framework_simplejwt.authentication.JWTAuthentication',),
-    'DEFAULT_PERMISSION_CLASSES':('rest_framework.permissions.IsAuthenticated',)
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',)
 }
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME':timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME':timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     # 'AUTH_HEADER_TYPE':('Bearer',)
 }
 
 # MEDIA SETTINGS
 MEDIA_URL = '/media/'  # This is the public URL for accessing media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # This is the directory where media files will be stored
+# This is the directory where media files will be stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Quick-start development settings - unsuitable for production
@@ -64,7 +64,8 @@ INSTALLED_APPS = [
     'seller',
     'sn_admin',
     'customer',
-    'products'
+    'products',
+    'inventory'
 ]
 
 MIDDLEWARE = [
@@ -107,11 +108,11 @@ WSGI_APPLICATION = 'SmartNexa.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'smartnexa',
-        'USER':'user_smartnexa',
-        'PASSWORD':'smartnexa',
-        'HOST':'localhost',
-        'PORT':'3306'
+        'NAME': 'smartnexa',
+        'USER': 'user_smartnexa',
+        'PASSWORD': 'smartnexa',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 

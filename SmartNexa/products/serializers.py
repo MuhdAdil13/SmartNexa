@@ -1,18 +1,20 @@
 from rest_framework import serializers
-from .models import Product, Inventory
+from .models import Product
 from django.utils import timezone
 
+
 class ProductSerializer(serializers.ModelSerializer):
-    discount_price = serializers.DecimalField(required=False, max_digits=7,decimal_places=2, min_value=0)
+    discount_price = serializers.DecimalField(
+        required=False, max_digits=7, decimal_places=2, min_value=0)
     # image = serializers.ImageField(required=False)
 
     class Meta:
         model = Product
         fields = (
-            'name', 'price', 'discount_price', 'brand', 
-            'category', 'connectivity', 'model_number', 
-            'serial_number', 'short_description', 'description', 
-            'slug','image', 'created_at', 'updated_at', 'is_enabled'
+            'name', 'price', 'discount_price', 'brand',
+            'category', 'connectivity', 'model_number',
+            'serial_number', 'short_description', 'description',
+            'slug', 'image', 'created_at', 'updated_at', 'is_enabled'
         )
 
     def create(self, validated_data):
@@ -39,31 +41,3 @@ class ProductSerializer(serializers.ModelSerializer):
         except Exception as e:
             print(f"Validation Error: {e}")
             raise serializers.ValidationError(f"Error creating product: {e}")
-
-
-
-class InventorySerializer(serializers.ModelSerializer):
-    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
-
-    class Meta:
-        model = Inventory
-        fields = ['product', 'price', 'stock_quantity', 'restock_date']
-
-    def create(self, validated_data):
-        # Create an Inventory instance
-        inventory = Inventory(
-            product=validated_data['product'],
-            price=validated_data['price'],
-            stock_quantity=validated_data['stock_quantity'],
-            restock_date=validated_data.get('restock_date')  # Optional field
-        )
-        inventory.save()
-        return inventory
-
-    def update(self, instance, validated_data):
-        # Update an existing Inventory instance
-        instance.price = validated_data.get('price', instance.price)
-        instance.stock_quantity = validated_data.get('stock_quantity', instance.stock_quantity)
-        instance.restock_date = validated_data.get('restock_date', instance.restock_date)
-        instance.save()
-        return instance
