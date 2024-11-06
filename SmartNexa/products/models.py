@@ -16,6 +16,7 @@ class Product(models.Model):
     discount_price = models.DecimalField(max_digits=10, decimal_places=2)
     connectivity = models.CharField(
         max_length=50, choices=[('WiFi', 'WiFi'), ('Bluetooth', 'Bluetooth')])
+    manufacturer=models.TextField(blank=True)        
     model_number = models.CharField(max_length=100, unique=True)
     serial_number = models.CharField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
